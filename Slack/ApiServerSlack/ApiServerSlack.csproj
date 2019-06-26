@@ -6,15 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Models\MessagePost.cs" />
-    <Compile Remove="Models\User.cs" />
-    <Compile Remove="Tools\DatabaseContext.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Include="Models\MessagePost.cs" />
     <None Include="Models\User.cs" />
-    <None Include="Tools\DatabaseContext.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,27 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ApiServerSlack.Models
 {
   public class User 
   {
-        [Required]
+        
         private int id;
-        [Required]
         private string name;
         private string token;
         private string email;
-        [Required]
         private string password;
-        private ICollection<Message> listMessages;
+        private ICollection<MessagePost> listMessages;
 
-        
-        string Name { get; set; }
-        string Password { get; set; }
+        public User()
+        {
+            listMessages = new List<MessagePost>();
+        }
+
         public string Email { get => email; set => email = value; }
-        ICollection<Message> ListMessages { get; set; }
-
+      
+        public int Id { get => id; set => id = value; }
+        [Required(ErrorMessage = "Champ obligatoire"), Display(Name = "Nom de lutilisateur")]
+        public string Name { get => name; set => name = value; }
+        public ICollection<MessagePost> ListMessages { get => listMessages; set => listMessages = value; }
+        [Required(ErrorMessage = "Champ obligatoire"), Display(Name = "mot de passe de lutilisateur")]
+        public string Password { get => password; set => password = value; }
+        public string Token { get => token; set => token = value; }
     }
 }

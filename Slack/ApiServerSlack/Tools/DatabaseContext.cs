@@ -1,28 +1,32 @@
+﻿using ApiServerSlack.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiServerSlack.ClientApp.Tools
+namespace ApiServerSlack.Tools
 {
-  public class DatabaseContext : DbContext
+    public class DatabaseContext : DbContext
     {
-        private static DataBaseContext _instance = null;
+        private static DatabaseContext _instance = null;
         private static readonly object _lock = new object();
 
-        public static DataBaseContext Instance
+        public static DatabaseContext Instance
         {
             get
             {
                 lock (_lock)
                 {
                     if (_instance == null)
-                        _instance = new DataBaseContext();
+                        _instance = new DatabaseContext();
                     return _instance;
                 }
             }
         }
-        private DataBaseContext()
+        private DatabaseContext()
         {
             RelationalDatabaseCreator creator = (RelationalDatabaseCreator)Database.GetService<IRelationalDatabaseCreator>();
             try
@@ -41,6 +45,6 @@ namespace ApiServerSlack.ClientApp.Tools
         }
 
         public DbSet<User> Users { get; set; }
-        public DbSet<MessagePost> MessagesPost { get; set; }
+        public DbSet<MessagePost> MessagePosts { get; set; }
     }
 }
