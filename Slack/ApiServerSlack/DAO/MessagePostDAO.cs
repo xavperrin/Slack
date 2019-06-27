@@ -10,7 +10,7 @@ namespace ApiServerSlack.DAO
 {
     public class MessagePostDAO : IDataAccess<MessagePost, int>
     {
-        private IServiceProvider serviceProvider;
+       
 
         public MessagePostDAO()
         {
@@ -86,6 +86,11 @@ namespace ApiServerSlack.DAO
         public MessagePost Retrieve(int id)
         {
             return DatabaseContext.Instance.MessagePosts.FirstOrDefault(x => x.Id == id);
+        }
+
+        public MessagePost Retrieve(MessagePost t)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Update(MessagePost message, int id)

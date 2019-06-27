@@ -13,6 +13,7 @@ namespace ApiServerSlack.DAO
         T Retrieve(ID id);
         bool Update(T t, ID id);
         bool Delete(ID id);
+        T Retrieve(T t);
         List<T> ListAll();
 
     }

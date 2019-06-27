@@ -5,8 +5,8 @@ using System.Linq;
 
 namespace ApiServerSlack.Models
 {
-  public class User 
-  {
+  public class User : IDomainObject
+    {
         
         private int id;
         private string name;
@@ -15,9 +15,16 @@ namespace ApiServerSlack.Models
         private string password;
         private ICollection<MessagePost> listMessages;
 
+
         public User()
         {
             listMessages = new List<MessagePost>();
+        }
+
+        public User(string name, string password)
+        {
+            this.Name = name;
+            this.Password = password;
         }
 
         public string Email { get => email; set => email = value; }

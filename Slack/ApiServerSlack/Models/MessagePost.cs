@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace ApiServerSlack.Models
 {
-  public class MessagePost 
-  {
+  public class MessagePost : IDomainObject
+    {
         [Required]
         private int id;
         private string title;

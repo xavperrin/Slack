@@ -1,22 +1,22 @@
 ﻿using ApiServerSlack.Models;
 using ApiServerSlack.Tools;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ApiServerSlack.DAO
 {
+    
     public class UserDAO : IDataAccess<User, int>
     {
-        private IServiceProvider serviceProvider;
+       public HttpContext Context { get; set; }
 
-        public UserDAO(IServiceProvider provider)
-        {
-            this.serviceProvider = provider;
-        }
+        
 
         public UserDAO()
         {
@@ -27,11 +27,7 @@ namespace ApiServerSlack.DAO
         {
             try {
                 DatabaseContext.Instance.Users.Add(user);
-                if (DatabaseContext.Instance.SaveChanges() > 0)
-                    return true;
-                else
-                    return false;
-
+                return DatabaseContext.Instance.SaveChanges() > 0 ? true : false;
             } catch (DbUpdateException dbe)
             {
 
@@ -61,9 +57,7 @@ namespace ApiServerSlack.DAO
                 else
                 {
                     DatabaseContext.Instance.Users.Remove(user2delete);
-                    if (DatabaseContext.Instance.SaveChanges() > 0)
-                        return true;
-                    else return false;
+                    return DatabaseContext.Instance.SaveChanges() > 0 ? true : false;
                 }
             }
             catch (ArgumentNullException anex)
@@ -91,6 +85,16 @@ namespace ApiServerSlack.DAO
         public User Retrieve(int id)
         {
                 return DatabaseContext.Instance.Users.Include("messageposts").FirstOrDefault(x => x.Id == id);   
+        }
+
+        public User Retrieve(User user)
+        {
+            return DatabaseContext.Instance.Users.FirstOrDefault(x => x.Name == user.Name && x.Password == user.Password);
+        }
+
+        public User Retrieve(string username)
+        {
+           return DatabaseContext.Instance.Users.FirstOrDefault(x => x.Name == username);
         }
 
         public bool Update(User user, int id)
